@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrayKeyIndicatorCore;
 
@@ -27,12 +21,20 @@ namespace TrayNumLockIndicator
 
             ShowInTaskbar = false;
             WindowState = FormWindowState.Minimized;
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+
+            // Trick to hide the application from the task list.
+            var invisibleParent = new Form
+            {
+                FormBorderStyle = FormBorderStyle.FixedToolWindow,
+                ShowInTaskbar = false
+            };
+
+            Owner = invisibleParent;
         }
 
         private void OnKeyLockStateChanged(object sender, KeyService.KeyLockChangedEventArgs keyLockChangedEventArgs)
         {
-           UpdateIcon(keyLockChangedEventArgs.IsNumLock);
+            UpdateIcon(keyLockChangedEventArgs.IsNumLock);
         }
 
         private NotifyIcon mNotifyIcon;
@@ -47,12 +49,10 @@ namespace TrayNumLockIndicator
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
