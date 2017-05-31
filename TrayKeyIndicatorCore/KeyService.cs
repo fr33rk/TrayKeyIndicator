@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+// ReSharper disable InconsistentNaming
+
 namespace TrayKeyIndicatorCore
 {
     public class KeyService : IDisposable
@@ -14,7 +16,6 @@ namespace TrayKeyIndicatorCore
 
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
-        private readonly LowLevelKeyboardProc mProc;
         private static IntPtr mHookId = IntPtr.Zero;
 
         public bool CapsLockPressed => Control.IsKeyLocked(Keys.CapsLock);
@@ -22,8 +23,7 @@ namespace TrayKeyIndicatorCore
 
         public KeyService()
         {
-            mProc = HookCallback;
-            mHookId = SetHook(mProc);
+            mHookId = SetHook(HookCallback);
         }
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -46,9 +46,9 @@ namespace TrayKeyIndicatorCore
             {
                 var vkCode = Marshal.ReadInt32(lParam);
 
-                var key = (Keys) vkCode;
+                var key = (Keys)vkCode;
 
-                if (key == Keys.Capital ||  key == Keys.CapsLock)
+                if (key == Keys.Capital || key == Keys.CapsLock)
                 {
                     OnKeyLockStateChanged?.Invoke(this, new KeyLockChangedEventArgs(!CapsLockPressed, NumLockPressed));
                 }
@@ -56,7 +56,6 @@ namespace TrayKeyIndicatorCore
                 {
                     OnKeyLockStateChanged?.Invoke(this, new KeyLockChangedEventArgs(CapsLockPressed, !NumLockPressed));
                 }
-          
             }
 
             return CallNextHookEx(mHookId, nCode, wParam, lParam);

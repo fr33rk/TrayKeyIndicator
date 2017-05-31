@@ -11,11 +11,11 @@ namespace TrayNumLockIndicator
         {
             InitializeComponent();
 
-            mKeyService = new KeyService();
-            mKeyService.OnKeyLockStateChanged += OnKeyLockStateChanged;
+            var keyService = new KeyService();
+            keyService.OnKeyLockStateChanged += OnKeyLockStateChanged;
 
             mNotifyIcon = new NotifyIcon();
-            UpdateIcon(mKeyService.NumLockPressed);
+            UpdateIcon(keyService.NumLockPressed);
             mNotifyIcon.ContextMenuStrip = contextMenuStrip1;
             mNotifyIcon.Visible = true;
 
@@ -37,8 +37,7 @@ namespace TrayNumLockIndicator
             UpdateIcon(keyLockChangedEventArgs.IsNumLock);
         }
 
-        private NotifyIcon mNotifyIcon;
-        private KeyService mKeyService;
+        private readonly NotifyIcon mNotifyIcon;
 
         private void UpdateIcon(bool isEnabled)
         {
