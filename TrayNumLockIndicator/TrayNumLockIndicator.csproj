@@ -83,6 +83,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PL.Common\Logger\PL.Logger.csproj">
+      <Project>{ec4d9e5b-b1a1-49eb-a7db-49fe70e12906}</Project>
+      <Name>PL.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TrayKeyIndicatorCore\TrayKeyIndicatorCore.csproj">
       <Project>{f4845340-69d2-419e-9531-969ad873350e}</Project>
       <Name>TrayKeyIndicatorCore</Name>

@@ -17,13 +17,15 @@ namespace TrayKeyIndicatorCore
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private static IntPtr mHookId = IntPtr.Zero;
+	    private static LowLevelKeyboardProc mHookKeyboardProcDelegate;
 
         public bool CapsLockPressed => Control.IsKeyLocked(Keys.CapsLock);
         public bool NumLockPressed => Control.IsKeyLocked(Keys.NumLock);
 
         public KeyService()
         {
-            mHookId = SetHook(HookCallback);
+	        mHookKeyboardProcDelegate = HookCallback;
+			mHookId = SetHook(mHookKeyboardProcDelegate);
         }
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)
